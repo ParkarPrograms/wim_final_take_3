@@ -24,7 +24,7 @@
 {% endwith %}
 <div class="container">
   <div class="row">
-      <div class = "col-lg-8 col-md-8 col-sm-8 ">
+      <div class = "heading col-lg-8 col-md-8 col-sm-8 ">
 <h1>HI {{(current_user.name).upper()}}!!</h1>
 <h2>Edit and update your preferences here!</h2>
       </div>
@@ -62,8 +62,8 @@
 
     <div class = "col-lg-8 col-md-8 col-sm-8 ">
         <br>
-<a href = "{{url_for('hello_world')}}"><h5>logout</h5></a>
-<a href = "{{url_for('delete')}}"><h5>delete items</h5></a>
+<a href = "{{url_for('hello_world')}}" class="btn btn-primary" role="button">logout</a>
+<a href = "{{url_for('delete')}} " class="btn btn-primary" role="button">delete items</a>
 
         </div>
     </div>

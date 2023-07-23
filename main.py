@@ -12,7 +12,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 
 load_dotenv()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("KEY")
+app.config['SECRET_KEY'] = os.getenv("SECRETKEY")
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
