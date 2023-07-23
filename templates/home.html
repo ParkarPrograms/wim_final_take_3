@@ -1,0 +1,72 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block styles %}
+
+{{ super() }}
+
+    <link rel = "stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+{% endblock %}
+
+
+
+{% block title %}Home{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message}}
+            </div>
+        {% endfor%}
+    {% endif%}
+{% endwith %}
+<div class="container">
+  <div class="row">
+      <div class = "col-lg-8 col-md-8 col-sm-8 ">
+<h1>HI {{(current_user.name).upper()}}!!</h1>
+<h2>Edit and update your preferences here!</h2>
+      </div>
+
+
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h3>The topics you are currently interested in are:</h3>
+{% for i in Topics_list.query.filter_by(id = current_user.id).all(): %}
+    <h4>{{i.topic}}</h4>
+{% endfor %}
+      </div>
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h3>Important personal Dates!</h3>
+          {% if not Imp_Dates_List.query.filter_by(id = current_user.id).all()%}
+          <h4>You have not added any occasions</h4>
+          {% endif %}
+{% for i in Imp_Dates_List.query.filter_by(id = current_user.id).all(): %}
+    <h4>{{i.dates}} : {{i.occasion}}</h4>
+{% endfor %}
+      </div>
+  </div>
+</div>
+<br><br>
+<div class="container">
+  <div class="row">
+<div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h4>Add new topics for you to get news on!</h4>
+
+{{ wtf.quick_form(form1) }}
+</div>
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h4>Add new occasions to get reminders!</h4>
+{{ wtf.quick_form(form2) }}
+      </div>
+
+    <div class = "col-lg-8 col-md-8 col-sm-8 ">
+        <br>
+<a href = "{{url_for('hello_world')}}"><h5>logout</h5></a>
+<a href = "{{url_for('delete')}}"><h5>delete items</h5></a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

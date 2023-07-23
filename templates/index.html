@@ -1,0 +1,35 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+
+{{ super() }}
+<link rel = "stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+{% endblock %}
+
+
+{% block title %}Today{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+      <div class = "col-lg-8 col-md-8 col-sm-8 ">
+<h1>What's Happening Today?</h1>
+<h3>A simple website that sends you <em>your</em> news daily.</h3>
+	<h4>Just tell us what interests you and the occasions you wish to be reminded of!</h4>
+	<h4>We will email you with the news that you want to read!</h4>
+</div>
+
+
+
+<br>
+	  <div class = "col-lg-8 col-md-8 col-sm-8 ">
+			<div class = "log">
+				<a href="{{url_for('login')}}"><h5>Login Here!</h5></a>
+				<a href="{{url_for('register')}}"><h5>Register Here!</h5></a>
+			</div>
+	  </div>
+  </div>
+</div>
+
+{% endblock %}

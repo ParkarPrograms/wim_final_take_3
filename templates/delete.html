@@ -1,0 +1,43 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block styles %}
+
+{{ super() }}
+        <link rel="stylesheet" href="../static/styles.css'">
+{% endblock %}
+
+
+{% block title %}Delete{% endblock %}
+
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message}}
+            </div>
+        {% endfor%}
+    {% endif%}
+{% endwith %}
+
+<div class="container">
+  <div class="row">
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h2>Delete the topics you do not wish to get news about</h2>
+
+{{ wtf.quick_form(form1) }}
+      </div>
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h2>Delete dates from your calendar</h2>
+<h4>Please enter data in the format: DD-MM-YYY</h4>
+{{ wtf.quick_form(form2) }}
+      </div>
+    <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<a href = "{{url_for('home')}}">return</a>
+      </div>
+  </div>
+</div>
+{% endblock %}

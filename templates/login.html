@@ -1,0 +1,39 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+
+	<link rel="stylesheet" href="../static/styles.css">
+{% endblock %}
+
+
+{% block title %}Login{% endblock %}
+
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message}}
+            </div>
+        {% endfor%}
+    {% endif%}
+{% endwith %}
+<div class="container">
+  <div class="row">
+      <div class = "col-lg-8 col-md-8 col-sm-12 ">
+<h4>Login here!</h4>
+{{ wtf.quick_form(form, novalidate=True) }}
+      </div>
+
+
+<div class = "col-lg-8 col-md-8 col-sm-12 ">
+    <br>
+<p>Don't have an account?</p>
+<a href="{{url_for('register')}}"><h5>Register Here!</h5></a>
+</div>
+</div>
+</div>
+{% endblock %}
