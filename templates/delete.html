@@ -5,7 +5,7 @@
 {% block styles %}
 
 {{ super() }}
-        <link rel="stylesheet" href="../static/styles.css'">
+        <link rel = "stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
 {% endblock %}
 
 
@@ -32,11 +32,16 @@
       </div>
       <div class = "col-lg-6 col-md-6 col-sm-12 ">
 <h2>Delete dates from your calendar</h2>
-<h4>Please enter data in the format: DD-MM-YYY</h4>
 {{ wtf.quick_form(form2) }}
       </div>
-    <div class = "col-lg-6 col-md-6 col-sm-12 ">
-<a href = "{{url_for('home')}}">return</a>
+
+      <div class = "col-lg-6 col-md-6 col-sm-12 ">
+<h2 class = "delete">Delete your account</h2>
+{{ wtf.quick_form(form3) }}
+      </div>
+
+    <div class = " return_button col-lg-12 col-md-12 col-sm-12 ">
+<a class="btn btn-primary" href = "{{url_for('home')}}">return to home page</a>
       </div>
   </div>
 </div>

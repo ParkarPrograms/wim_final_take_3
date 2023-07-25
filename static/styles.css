@@ -2,4 +2,10 @@ body {
     background: linear-gradient(90deg, rgba(78,79,235,1) 0%, rgba(129,173,218,1) 36%, rgba(129,173,218,1) 64%, rgba(78,79,235,1) 100%);
     color: #ffffff;
 }
+.return_button{
+    padding: 4%;
+}
 
+.delete{
+    color: #aa1255;
+}

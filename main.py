@@ -173,6 +173,7 @@ def home():
 def delete():
     form1 = Topics()
     form2 = Imp_dates()
+    form3 = Login()
     if form1.validate_on_submit():
         delete_topic = Topics_list.query.filter_by(id=current_user.id, topic=form1.topic.data.strip().lower()).first()
         if not delete_topic:
@@ -192,9 +193,25 @@ def delete():
             db.session.commit()
             flash("your occasion has been deleted")
             return redirect(url_for('home'))
+    if form3.validate_on_submit():
+        email = form3.email.data
+        password = form3.password.data
+        user = User.query.filter_by(email=email).first()
+        if not email == current_user.email:
+            flash('This is not your email.')
+            return redirect(url_for('delete'))
+        if not check_password_hash(user.password, password):
+            flash('Password incorrect, please try again.')
+            return redirect(url_for('delete'))
+        else:
+            delete_user = User.query.filter_by(id=current_user.id, email = email).first()
+            db.session.delete(delete_user)
+            db.session.commit()
+            flash("your account has been deleted")
+            return redirect(url_for('hello_world'))
     print(current_user)
 
-    return render_template("delete.html", form1=form1, form2=form2, current_user=current_user, Topics_list=Topics_list,
+    return render_template("delete.html", form1=form1, form2=form2, form3 = form3, current_user=current_user, Topics_list=Topics_list,
                            Imp_Dates_List=Imp_Dates_List)
 
 
