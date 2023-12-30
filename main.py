@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 import wtforms
 import os
+import stripe
 from dotenv import load_dotenv
 from wtforms.fields import EmailField
 from wtforms.validators import DataRequired, URL, Email
@@ -16,6 +17,8 @@ app.config['SECRET_KEY'] = "updates"
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+stripe.api_key = 'sk_test_51NngMXSBsAMTk11HO2U2u3Fjm7Old31x4uCHgwivqg9sI8K2pReK30dVfUox9B1SocZYPQ5vs9hJUqjPZXM4kSvL00LSpVKPZB'
+YOUR_DOMAIN = 'http://localhost:4242'
 
 
 @login_manager.user_loader
@@ -39,10 +42,6 @@ class User(UserMixin, db.Model):
     aadhar = db.Column(db.String(250), nullable=False)
 
 
-class Topics_list(db.Model):
-    __tablename__ = "news_topics"
-    id = db.Column(db.String(250), primary_key=True)
-    topic = db.Column(db.String(250), primary_key=True)
 
 
 class Imp_Dates_List(db.Model):
@@ -95,6 +94,12 @@ class Jobs_form(FlaskForm):
     address = wtforms.StringField("address: ", validators=[DataRequired()])
     submit = wtforms.SubmitField("Submit")
 
+
+class Jobs_delete_form(FlaskForm):
+    title = wtforms.StringField("Title: ", validators=[DataRequired()])
+    submit = wtforms.SubmitField("Submit")
+
+
 # web pages
 @app.route('/logout')
 def logout():
@@ -117,6 +122,43 @@ def mission():
 @app.route("/donate")
 def donate():
     return render_template("donate.html")
+
+@app.route("/checkout",methods = ['POST','GET'])
+def payment():
+    try:
+
+        num_list = [int(request.form['gratuity_quantity']),int(request.form['generosity_quantity']),int(request.form['graciousness_quantity'])]
+        items = []
+        for index,i in enumerate(num_list):
+            if i>=1:
+                if index == 0:
+                    items.append({
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': "price_1NngfLSBsAMTk11H9lBXVEG2",
+                    'quantity': i,
+                })
+                elif index ==1:
+                    items.append({
+                    'price': 'price_1NngfaSBsAMTk11Hr9elyFXE',
+                    'quantity':i,
+                })
+                elif index == 2:
+                    items.append({
+                    'price': 'price_1NnglJSBsAMTk11H1Ag1tjOC',
+                    'quantity': i,
+                })
+
+        checkout_session = stripe.checkout.Session.create(
+            line_items=items,
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/cancel.html',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(checkout_session.url, code=303)
+
 
 @app.route("/admin", methods=['GET', 'POST'])
 def admin():
@@ -208,27 +250,27 @@ def home():
 
 @app.route("/delete", methods=['GET', 'POST'])
 def delete():
-    form1 = Jobs_form()
+    form1 = Jobs_delete_form()
     form2 = Imp_dates()
     form3 = Login()
     if form1.validate_on_submit():
-        delete_jobs = Topics_list.query.filter_by(title=form1.title.data.strip().lower()).first()
+        delete_jobs = Jobs_database.query.filter_by(title=form1.title.data).first()
         if not delete_jobs:
             flash("There is no such job")
         else:
             db.session.delete(delete_jobs)
             db.session.commit()
             flash("The job has been deleted")
-            return redirect(url_for('home'))
+            return redirect(url_for('admin'))
     if form2.validate_on_submit():
-        delete_occasion = Imp_Dates_List.query.filter_by(occasion=form2.occasion.data.strip().lower()).first()
+        delete_occasion = Imp_Dates_List.query.filter_by(occasion=form2.occasion.data).first()
         if not delete_occasion:
             flash("There is no such date")
         else:
             db.session.delete(delete_occasion)
             db.session.commit()
             flash("The event has been deleted")
-            return redirect(url_for('home'))
+            return redirect(url_for('admin'))
     if form3.validate_on_submit():
         email = form3.email.data
         password = form3.password.data
@@ -243,11 +285,11 @@ def delete():
             delete_user = User.query.filter_by(id=current_user.id, email = email).first()
             db.session.delete(delete_user)
             db.session.commit()
-            flash("your account has been deleted")
+            flash("The account has been deleted")
             return redirect(url_for('hello_world'))
     print(current_user)
 
-    return render_template("delete.html", form1=form1, form2=form2, form3 = form3, current_user=current_user, Topics_list=Topics_list,
+    return render_template("delete.html", form1=form1, form2=form2, form3 = form3, current_user=current_user, Jobs_database=Jobs_database,
                            Imp_Dates_List=Imp_Dates_List)
 
 
