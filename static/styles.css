@@ -1,11 +1,56 @@
+
+
+
 body {
-    background: linear-gradient(90deg, rgba(78,79,235,1) 0%, rgba(129,173,218,1) 36%, rgba(129,173,218,1) 64%, rgba(78,79,235,1) 100%);
-    color: #ffffff;
-}
-.return_button{
-    padding: 4%;
+  background-color: #f8f9fa;
+  background-image: url(ow1.png);
+  background-repeat: no-repeat;
+  background-attachment:fixed ;
+  background-size: 100%;
 }
 
-.delete{
-    color: #aa1255;
+.info{
+    background-color: #e3d9bf;
+    padding : 10px;
+    border-radius: 10px;
+}
+
+.navbar {
+  background-color: #007bff;
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.home-text {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  margin: 0% 10%;
+}
+
+.page-content {
+  text-align: center;
+}
+
+.page-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
 }
