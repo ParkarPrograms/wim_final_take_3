@@ -9,7 +9,7 @@
 {% endblock %}
 
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 
 
 {% block content %}
@@ -28,93 +28,94 @@
 
 
 
-    <form action="#" class="form">
+<!--    <form action="#" class="form">-->
 
-        <h1 class="text-center">SignUp Form</h1>
+<!--        <h1 class="text-center">SignUp Form</h1>-->
 
-        <!------------------Progressbar-------------------->
-        <div class="progressbar">
+<!--        &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Progressbar&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--        <div class="progressbar">-->
 
-            <div class="progress" id="progress"></div>
-            <div class="progress-step active" data-title="Name"></div>
-            <div class="progress-step" data-title="Contact"></div>
-            <div class="progress-step" data-title="ID"></div>
-            <div class="progress-step" data-title="Password"></div>
-        </div>
+<!--            <div class="progress" id="progress"></div>-->
+<!--            <div class="progress-step active" data-title="Name"></div>-->
+<!--            <div class="progress-step" data-title="Contact"></div>-->
+<!--            <div class="progress-step" data-title="ID"></div>-->
+<!--            <div class="progress-step" data-title="Password"></div>-->
+<!--        </div>-->
 
-        {{ form.hidden_tag() }}
-        <div class="form-step active">
-            <div class="input-group">
-                {{ form.user_id.label(class = "form-label") }}
-                {{ form.user_id(class= "form-control") }}
-        </div>
-        <div class="input-group">
-            {{ form.name.label(class = "form-label") }}
-                {{ form.name(class= "form-control") }}
-        </div>
-        <div class="">
-            <a href="#" class="btn
-             btn-next with-50
-             ml-auto">Next</a>
+<!--        {{ form.hidden_tag() }}-->
+<!--        <div class="form-step active">-->
+<!--            <div class="input-group">-->
+<!--                {{ form.user_id.label(class = "form-label") }}-->
+<!--                {{ form.user_id(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="input-group">-->
+<!--            {{ form.name.label(class = "form-label") }}-->
+<!--                {{ form.name(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--            <a href="#" class="btn-->
+<!--             btn-next with-50-->
+<!--             ml-auto">Next</a>-->
 
-        </div>
-    </div>
+<!--        </div>-->
+<!--    </div>-->
 
-        <!--------------Part2---------------------->
+<!--        &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Part2&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
 
-        <div class="form-step">
-            <div class="input-group">
-                {{ form.number.label(class = "form-label") }}
-                {{ form.number(class= "form-control") }}
-        </div>
-        <div class="input-group">
-            {{ form.email.label(class = "form-label") }}
-                {{ form.email(class= "form-control") }}
-        </div>
-        <div class="btns-group">
-            <a href="#" class="btn btn-prev">Previous</a>
-             <a href="#" class="btn btn-next">Next</a>
-        </div>
-    </div>
-
-
-        <!--------------Part3---------------------->
+<!--        <div class="form-step">-->
+<!--            <div class="input-group">-->
+<!--                {{ form.number.label(class = "form-label") }}-->
+<!--                {{ form.number(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="input-group">-->
+<!--            {{ form.email.label(class = "form-label") }}-->
+<!--                {{ form.email(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="btns-group">-->
+<!--            <a href="#" class="btn btn-prev">Previous</a>-->
+<!--             <a href="#" class="btn btn-next">Next</a>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
-        <div class="form-step">
-            <div class="input-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" name="dob" id="dob">
-        </div>
-        <div class="input-group">
-            {{ form.aadhar.label(class = "form-label") }}
-            {{ form.aadhar(class= "form-control") }}
-        </div>
-        <div class="btns-group">
-            <a href="#" class="btn btn-prev">Previous</a>
-            <a href="#" class="btn btn-next">Next</a>
-        </div>
-    </div>
+<!--        &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Part3&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
 
 
-        <!--------------Part4---------------------->
+<!--        <div class="form-step">-->
+<!--            <div class="input-group">-->
+<!--                <label for="dob">Date of Birth</label>-->
+<!--                <input type="date" name="dob" id="dob">-->
+<!--        </div>-->
+<!--        <div class="input-group">-->
+<!--            {{ form.aadhar.label(class = "form-label") }}-->
+<!--            {{ form.aadhar(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="btns-group">-->
+<!--            <a href="#" class="btn btn-prev">Previous</a>-->
+<!--            <a href="#" class="btn btn-next">Next</a>-->
+<!--        </div>-->
+<!--    </div>-->
 
-        <div class="form-step">
-            <div class="input-group">
-                {{ form.password.label(class = "form-label") }}
-                {{ form.password(class= "form-control") }}
-        </div>
-        <div class="input-group">
-            <label for="ConfirmPassword">Confirm Password</label>
-            <input type="password" name="ConfirmPassword" id="ConfirmPassword">
-        </div>
-        <div class="btns-group">
-            <a href="#" class="btn btn-prev">Previous</a>
-            {{ form.submit() }}
-        </div>
-    </div>
 
-    </form>
+<!--        &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Part4&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+
+<!--        <div class="form-step">-->
+<!--            <div class="input-group">-->
+<!--                {{ form.password.label(class = "form-label") }}-->
+<!--                {{ form.password(class= "form-control") }}-->
+<!--        </div>-->
+<!--        <div class="input-group">-->
+<!--            <label for="ConfirmPassword">Confirm Password</label>-->
+<!--            <input type="password" name="ConfirmPassword" id="ConfirmPassword">-->
+<!--        </div>-->
+<!--        <div class="btns-group">-->
+<!--            <a href="#" class="btn btn-prev">Previous</a>-->
+<!--            {{ form.submit() }}-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    </form>-->
+{{ wtf.quick_form(form, novalidate=True) }}
 
 
 

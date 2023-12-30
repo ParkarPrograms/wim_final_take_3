@@ -2,16 +2,16 @@ from flask import Flask, render_template, redirect, flash, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 import wtforms
-import os
 import stripe
-from dotenv import load_dotenv
 from wtforms.fields import EmailField
 from wtforms.validators import DataRequired, URL, Email
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+import requests
+import time
 
-load_dotenv()
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "updates"
 Bootstrap(app)
@@ -216,6 +216,22 @@ def login():
 def register():
     form = Register()
     if form.validate_on_submit():
+        email_response = requests.get(
+            f"https://emailvalidation.abstractapi.com/v1/?api_key=27ad0095c99c422d89802f549e633090&email={form.email.data}")
+
+        email_response = email_response.json()
+        if email_response['deliverability'] != "DELIVERABLE":
+            flash("invalid email.")
+            return redirect(url_for('register'))
+        time.sleep(2)
+        phone_response = requests.get(
+            f"https://phonevalidation.abstractapi.com/v1/?api_key=43c55aa383ca446cb74891b3c25860f1&phone={form.number.data}")
+        phone_response = phone_response.json()
+        print(phone_response)
+        if phone_response['valid'] != True:
+            flash("invalid phone number.")
+            return redirect(url_for('register'))
+
         if User.query.filter_by(id = form.user_id.data).first():
             flash("ID already taken. Please Try another one")
             return redirect(url_for('register'))
