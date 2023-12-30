@@ -6,14 +6,71 @@
   <title>About</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel = "stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('index')}}">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <p><br></p>
+</div>
+
+<div class="container">
+  <h2 class="page-header" style="text-align: center;">Our Accomplishments</h2>
+  <br>
+  <br>
+</div>
+
+<div id="invoice">
+  <div class="container">
+    <h2 class="page-header" style="text-align: left;">Journey of Volunteer Engagement</h2><br>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div><br>
+    <p style="font-size: large;">The line chart above vividly illustrates the exceptional progress in volunteer engagement over time, showcasing a consistent and remarkable growth in the number of volunteers registered each year. From the initial count in 2018 to the most recent data in 2021, the upward trajectory is evident, highlighting a robust and positive trend in community involvement. This visual representation not only underscores the increasing interest and commitment of individuals to volunteer but also suggests the effectiveness of strategies employed to attract and retain volunteers. The upward curve reflects a compelling story of success and community impact, affirming the organization's dedication to fostering a culture of service and meaningful contributions.</p>
+    <br>
+    <br>
+  </div>
+
+  <div class="container">
+    <h2 class="page-header" style="text-align: left;">A Flourishing Tapestry of Community Participation</h2><br>
+    <div id="piechart_3d" style="width: 900px; height: 500px;"></div><br>
+    <p style="font-size: large;">In our vibrant online community, the impact of our collective efforts is eloquently captured in the diverse tapestry of occasions celebrated. Our recently implemented volunteer engagement program has not only fostered a sense of unity but has also yielded positive outcomes. The accompanying pie chart vividly illustrates the successful participation of volunteers in various events, from birthdays to charity runs. This dynamic representation showcases the thriving spirit of collaboration, where each slice represents a unique occasion and the number of dedicated volunteers who actively contributed. The visual narrative tells a story of meaningful engagement and the growing success of our shared mission. This graphical depiction not only highlights the joyous moments we've celebrated but also underscores the positive impact of our community's collective actions. Together, we continue to weave a tapestry of positivity, growth, and shared accomplishments on our journey towards making a real difference.</p>
+  </div>
+
+  <div class="container">
+    <h2 class="page-header" style="text-align: left;">Admin and Volunteer Demographics</h2><br>
+    <div id="demographics_pie_chart" style="width: 900px; height: 500px;"></div><br>
+    <p style="font-size: large;">In the above pie chartEach slice of the pie represents a distinct age group, illustrating the diverse range of individuals dedicated to our shared mission. From the dynamic energy of the 18-24 age category to the seasoned wisdom of those aged 55 and above, our community embraces and values every contributor. The chart serves as a visual affirmation of the positive impact stemming from this diversity, highlighting a collaborative spirit that transcends generations. It symbolizes our collective strength, bridging experiences and perspectives to create a harmonious and dynamic volunteering family. As we celebrate our accomplishments, this chart stands as a testament to our ongoing commitment to fostering an environment where every individual, regardless of age, plays a crucial role in contributing to our motive.</p>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" onclick="generatePDF()">Download</button>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- Initialize Charts -->
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
+  google.charts.load('current', { 'packages': ['corechart'] });
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    // Replace this data with your actual volunteer registration data
     var volunteerData = [
       ['Year', 'Number of Volunteers'],
       ['2018',  250],
@@ -31,16 +88,13 @@
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
     chart.draw(data, options);
+
+    drawPieChart();
+    initializeCharts();
   }
-</script>
-<script type="text/javascript">
-  google.charts.load("current", {packages:["corechart"]});
-  google.charts.setOnLoadCallback(drawPieChart);
-  
+
   function drawPieChart() {
-    // Replace this data with your actual occasions and volunteer participation data
     var occasionsData = [
       ['Occasion', 'Volunteers Participated'],
       ['Birthday', 50],
@@ -62,68 +116,45 @@
     var pieChart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
     pieChart.draw(pieData, pieOptions);
   }
+
+  function initializeCharts() {
+    drawPie(
+      'demographics_pie_chart',
+      'Demographics of Volunteers',
+      [
+        ['Category', 'Percentage'],
+        ['18-24', 15],
+        ['25-34', 30],
+        ['35-44', 25],
+        ['55+', 10],
+      ],
+      { is3D: true }
+    );
+  }
+
+  function drawPie(elementId, chartTitle, chartData, chartOptions) {
+    var data = google.visualization.arrayToDataTable(chartData);
+
+    var options = {
+      title: chartTitle,
+      is3D: chartOptions.is3D || false,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById(elementId));
+    chart.draw(data, options);
+  }
+
+  // Your script.js file
+  // ...
+
+  function generatePDF() {
+    const element = document.getElementById("invoice");
+
+    html2pdf()
+      .from(element)
+      .save();
+  }
 </script>
-
-
-
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{url_for('index')}}">Home</a>
-        </li>
-
-      </ul>
-    </div>
-  </div>
-</nav>
-<div class="container">
-  <p><br></p>
-</div>
-<div class="container">
-  <h2 class="page-header" style="text-align: center;">Our Accomplishments</h2>
-<br>
-<br>
-</div>
-<div class="container">
-  <h2 class="page-header" style="text-align: left;">Journey of Volunteer Engagement</h2>
-  <div id="curve_chart" style="width: 900px; height: 500px"></div>
-  <p style="font-size: large;">The line chart above vividly illustrates the exceptional progress in volunteer engagement over time, showcasing a consistent and remarkable growth in the number of volunteers registered each year. From the initial count in 2018 to the most recent data in 2021, the upward trajectory is evident, highlighting a robust and positive trend in community involvement. This visual representation not only underscores the increasing interest and commitment of individuals to volunteer but also suggests the effectiveness of strategies employed to attract and retain volunteers. The upward curve reflects a compelling story of success and community impact, affirming the organization's dedication to fostering a culture of service and meaningful contributions.
-
-
-
-
-
-  </p>
-<br>
-<br>
-<div class="container">
-  <h2 class="page-header" style="text-align: left;">A Flourishing Tapestry of Community Participation</h2>
-  <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
-  <p style="font-size: large;">In our vibrant online community, the impact of our collective efforts is eloquently captured in the diverse tapestry of occasions celebrated. Our recently implemented volunteer engagement program has not only fostered a sense of unity but has also yielded positive outcomes. The accompanying pie chart vividly illustrates the successful participation of volunteers in various events, from birthdays to charity runs. This dynamic representation showcases the thriving spirit of collaboration, where each slice represents a unique occasion and the number of dedicated volunteers who actively contributed. The visual narrative tells a story of meaningful engagement and the growing success of our shared mission. This graphical depiction not only highlights the joyous moments we've celebrated but also underscores the positive impact of our community's collective actions. Together, we continue to weave a tapestry of positivity, growth, and shared accomplishments on our journey towards making a real difference.
-
-
-
-
-
-  </p>
-</div>
-<br>
-<br>
-
-
-
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
