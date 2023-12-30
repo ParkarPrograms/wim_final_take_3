@@ -58,9 +58,12 @@
     <p style="font-size: large;">In the above pie chartEach slice of the pie represents a distinct age group, illustrating the diverse range of individuals dedicated to our shared mission. From the dynamic energy of the 18-24 age category to the seasoned wisdom of those aged 55 and above, our community embraces and values every contributor. The chart serves as a visual affirmation of the positive impact stemming from this diversity, highlighting a collaborative spirit that transcends generations. It symbolizes our collective strength, bridging experiences and perspectives to create a harmonious and dynamic volunteering family. As we celebrate our accomplishments, this chart stands as a testament to our ongoing commitment to fostering an environment where every individual, regardless of age, plays a crucial role in contributing to our motive.</p>
   </div>
 </div>
-
-<button type="button" class="btn btn-primary" onclick="generatePDF()">Download</button>
-
+<br>
+<button class="btn btn-primary" id="printBtn">Download</button>
+<br>
+<br>
+<br>
+<br>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -143,18 +146,12 @@
     var chart = new google.visualization.PieChart(document.getElementById(elementId));
     chart.draw(data, options);
   }
-
-  // Your script.js file
-  // ...
-
-  function generatePDF() {
-    const element = document.getElementById("invoice");
-
-    html2pdf()
-      .from(element)
-      .save();
-  }
 </script>
+<script>
+        document.getElementById('printBtn').addEventListener('click', function () {
+            window.print();
+        });
+    </script>
 
 </body>
 </html>
